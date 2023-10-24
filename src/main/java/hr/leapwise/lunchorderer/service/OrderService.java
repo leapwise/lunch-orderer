@@ -21,13 +21,14 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Order with ID %d not found!", orderId)));
     }
 
-    public Order createOrder(final List<Long> mealIds) {
+    public Long createOrder(final List<Long> mealIds) {
         final List<Meal> meals = mealService.convertMealIdsToMeals(mealIds);
 
         final Order order = new Order();
         order.setMeals(meals);
 
-        return orderRepository.save(order);
+        final Order savedOrder = orderRepository.save(order);
+        return savedOrder.getOrderId();
     }
 
     public Order updateOrder(final Long orderId, final List<Long> mealIds) {

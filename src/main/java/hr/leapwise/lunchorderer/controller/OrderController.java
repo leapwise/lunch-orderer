@@ -14,7 +14,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/order")
-    public Order createOrder(@RequestBody final List<Long> mealIds) {
+    public Long createOrder(@RequestBody final List<Long> mealIds) {
         return orderService.createOrder(mealIds);
     }
 
