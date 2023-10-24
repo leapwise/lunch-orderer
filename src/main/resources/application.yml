@@ -11,3 +11,20 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   h2:
     console.enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "smtp.lunch.orderer@gmail.com"
+    password: "ywac knuf qaig khwq"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+hr.leapwise.lunchorderer:
+  order:
+    meal-ids: 3, 3, 5, 8, 8, 8
+    email: "nikola.tovernic@hotmail.com"
+    cron: "0 30 10 * * *"

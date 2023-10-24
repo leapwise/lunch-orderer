@@ -18,7 +18,7 @@ public class OrderController {
         return orderService.createOrder(mealIds);
     }
 
-    @PutMapping("/order/{orderId}")
+    @PatchMapping("/order/{orderId}")
     public Order updateOrder(@PathVariable final Long orderId, @RequestBody final List<Long> mealIds) {
         return orderService.updateOrder(orderId, mealIds);
     }

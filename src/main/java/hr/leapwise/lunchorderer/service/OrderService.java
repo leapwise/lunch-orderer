@@ -2,7 +2,6 @@ package hr.leapwise.lunchorderer.service;
 
 import hr.leapwise.lunchorderer.model.Meal;
 import hr.leapwise.lunchorderer.model.Order;
-import hr.leapwise.lunchorderer.repository.MealRepository;
 import hr.leapwise.lunchorderer.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final MealRepository mealRepository;
+    private final MealService mealService;
 
     public Order getOrder(final Long orderId) {
         return orderRepository.findById(orderId)
@@ -23,7 +22,7 @@ public class OrderService {
     }
 
     public Order createOrder(final List<Long> mealIds) {
-        final List<Meal> meals = convertMealIdsToMeals(mealIds);
+        final List<Meal> meals = mealService.convertMealIdsToMeals(mealIds);
 
         final Order order = new Order();
         order.setMeals(meals);
@@ -33,18 +32,10 @@ public class OrderService {
 
     public Order updateOrder(final Long orderId, final List<Long> mealIds) {
         final Order order = getOrder(orderId);
-        final List<Meal> meals = convertMealIdsToMeals(mealIds);
+        final List<Meal> meals = mealService.convertMealIdsToMeals(mealIds);
 
         order.getMeals().addAll(meals);
 
         return orderRepository.save(order);
-    }
-
-    private List<Meal> convertMealIdsToMeals(final List<Long> mealIds) {
-        return mealIds.stream()
-                .map(mealId -> mealRepository.findById(mealId)
-                        .orElseThrow(() -> new EntityNotFoundException(String.format("Meal with ID %d not found!", mealId))))
-                .toList();
-
     }
 }
