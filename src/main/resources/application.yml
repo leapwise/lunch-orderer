@@ -25,6 +25,5 @@ spring:
 
 hr.leapwise.lunchorderer:
   order:
-    meal-ids: 3, 3, 5, 8, 8, 8
     email: "nikola.tovernic@hotmail.com"
     cron: "0 30 10 * * *"

@@ -7,6 +7,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,6 +21,11 @@ public class OrderService {
     public Order getOrder(final Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Order with ID %d not found!", orderId)));
+    }
+
+    public List<Order> getTodayOrders() {
+        final LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        return orderRepository.findAllByCreatedAtAfter(startOfDay);
     }
 
     public Long createOrder(final List<Long> mealIds) {
@@ -35,6 +42,7 @@ public class OrderService {
         final Order order = getOrder(orderId);
         final List<Meal> meals = mealService.convertMealIdsToMeals(mealIds);
 
+        order.getMeals().clear();
         order.getMeals().addAll(meals);
 
         return orderRepository.save(order);
