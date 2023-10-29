@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:mealsdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  jpa:
+    defer-datasource-initialization: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "leapwise_lo@gmail.com"
+    password: "password"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+email:
+  cron: 0 30 10 * * ?
+  recipient: lunch_orderer@gmail.com
